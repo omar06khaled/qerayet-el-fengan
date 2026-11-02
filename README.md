@@ -95,7 +95,7 @@ python3 -m venv .venv
 .venv/bin/sahm-dashboard
 ```
 
-Open http://127.0.0.1:8000. It starts on demo data with order placement off.
+Open http://127.0.0.1:8000. It starts on demo data with order placement off. If port 8000 is taken, run `sahm-dashboard --port 8001`.
 
 ## Connect your Younit account
 

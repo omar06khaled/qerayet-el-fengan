@@ -174,10 +174,36 @@ if _DIST.exists():
         return FileResponse(_DIST / "index.html")
 
 
+def _port_free(host: str, port: int) -> bool:
+    import socket
+
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        try:
+            s.bind((host, port))
+            return True
+        except OSError:
+            return False
+
+
 def main() -> None:
+    import argparse
+    import os
+    import sys
+
     import uvicorn
 
-    uvicorn.run("sahm.api:app", host="127.0.0.1", port=8000)
+    parser = argparse.ArgumentParser(prog="sahm-dashboard", description="Run the Sahm dashboard.")
+    parser.add_argument("--port", type=int, default=int(os.getenv("SAHM_PORT", "8000")),
+                        help="Port to serve on (default 8000, or SAHM_PORT).")
+    args = parser.parse_args()
+    host = "127.0.0.1"
+    if not _port_free(host, args.port):
+        sys.exit(
+            f"Port {args.port} is already in use, probably by another copy of the dashboard.\n"
+            f"Stop that one with Ctrl+C in its terminal, or run on another port: sahm-dashboard --port {args.port + 1}"
+        )
+    print(f"Sahm dashboard: http://{host}:{args.port}")
+    uvicorn.run("sahm.api:app", host=host, port=args.port)
 
 
 if __name__ == "__main__":

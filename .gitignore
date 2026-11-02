@@ -1,0 +1,15 @@
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+*.egg-info/
+/dist/
+/build/
+
+# Web (web/dist is committed on purpose: the dashboard ships prebuilt)
+web/node_modules/
+*.tsbuildinfo

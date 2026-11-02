@@ -34,7 +34,7 @@ export default function App() {
   useEffect(() => {
     Promise.all([api.status(), api.symbols()])
       .then(([s, q]) => { setStatus(s); setQuotes(q); })
-      .catch(() => setError("Can't reach the Sahm API on port 8000. Start it with: younit-dashboard"));
+      .catch(() => setError("Can't reach the Qerayet el Fengan API on port 8000. Start it with: fengan-dashboard"));
     loadPortfolio();
   }, [loadPortfolio]);
 
@@ -50,9 +50,9 @@ export default function App() {
     <div className="app">
       <header className="top">
         <div className="brand">
-          <span className="mark" lang="ar">سهم</span>
-          <span className="brand-name">Sahm</span>
-          <span className="brand-sub">A strategy lab for the EGX</span>
+          <span className="mark" lang="ar">فنجان</span>
+          <span className="brand-name">Qerayet el Fengan</span>
+          <span className="brand-sub">Your strategy’s fortune, tested</span>
         </div>
         {account && (
           <dl className="figures">

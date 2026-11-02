@@ -5,7 +5,7 @@ Every `*.py` file in a strategy folder is imported once at startup; each
 reported in LOAD_ERRORS instead of crashing the app.
 
 Folders searched, in order:
-  1. Each path in SAHM_STRATEGY_DIRS (separated by ; on Windows, : elsewhere)
+  1. Each path in FENGAN_STRATEGY_DIRS (separated by ; on Windows, : elsewhere)
   2. ./strategies in the current working directory
   3. strategies/ at the project root (next to pyproject.toml)
 
@@ -26,7 +26,7 @@ _PROJECT_ROOT = Path(__file__).resolve().parents[3]
 
 
 def strategy_dirs() -> list[Path]:
-    dirs = [Path(p) for p in os.getenv("SAHM_STRATEGY_DIRS", "").split(os.pathsep) if p.strip()]
+    dirs = [Path(p) for p in os.getenv("FENGAN_STRATEGY_DIRS", "").split(os.pathsep) if p.strip()]
     dirs += [Path.cwd() / "strategies", _PROJECT_ROOT / "strategies"]
     seen, out = set(), []
     for d in dirs:
@@ -46,7 +46,7 @@ def load_user_strategies() -> None:
 
 
 def load_file(path: Path) -> None:
-    module_name = f"sahm_user_strategy_{path.stem}"
+    module_name = f"fengan_user_strategy_{path.stem}"
     if module_name in sys.modules:
         return
     before = set(base.REGISTRY)

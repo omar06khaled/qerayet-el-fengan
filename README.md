@@ -1,18 +1,20 @@
-# Sahm · سهم
+# Qerayet el Fengan · قراية الفنجان
+
+*Your strategy's fortune, tested.* In Egypt, *qerayet el fengan* is reading the coffee cup: telling a fortune from the grounds. Most backtests are coffee-cup readings too. This one tells you when yours is.
 
 **An open-source strategy lab for the Egyptian Exchange.** Test well-known technical strategies, or your own, on EGX stocks, with backtests that are honest about what they can and cannot show. Built on [Younit by EFG Hermes](https://github.com/efg-hermes-younit/younit-python), Egypt's first retail algorithmic trading API.
 
-[![CI](https://github.com/omar06khaled/sahm/actions/workflows/ci.yml/badge.svg)](https://github.com/omar06khaled/sahm/actions/workflows/ci.yml)
+[![CI](https://github.com/omar06khaled/qerayet-el-fengan/actions/workflows/ci.yml/badge.svg)](https://github.com/omar06khaled/qerayet-el-fengan/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 ![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)
 
-![Sahm dashboard: EGX watchlist, price chart and holdings](docs/dashboard.png)
+![Qerayet el Fengan dashboard: EGX watchlist, price chart and holdings](docs/dashboard.png)
 
 > Independent open-source project, not affiliated with or endorsed by EFG Hermes. Backtests are historical simulations, not predictions or investment advice.
 
 ## Why
 
-Younit gives retail traders and students in Egypt an API to automate trading. Before you automate a rule, you want to know whether it would have worked. Most backtests make that too easy: they let a rule peek at future prices by accident, they get tuned until the past looks perfect, and they report a lucky streak as an edge. Sahm is built to catch all three.
+Younit gives retail traders and students in Egypt an API to automate trading. Before you automate a rule, you want to know whether it would have worked. Most backtests make that too easy: they let a rule peek at future prices by accident, they get tuned until the past looks perfect, and they report a lucky streak as an edge. Qerayet el Fengan is built to catch all three.
 
 ## What's inside
 
@@ -53,7 +55,7 @@ Synthetic demo prices are random walks, so the check never gives a verdict on th
 
 ```python
 # strategies/price_above_average.py
-from sahm.strategies import Param, closes, hold_while, indicators as ind, strategy
+from fengan.strategies import Param, closes, hold_while, indicators as ind, strategy
 
 
 @strategy(
@@ -78,30 +80,30 @@ You need Python 3.10 or newer. The dashboard comes prebuilt, so Node.js is only 
 **Windows (PowerShell)**
 
 ```powershell
-git clone https://github.com/omar06khaled/sahm.git
-cd sahm
+git clone https://github.com/omar06khaled/qerayet-el-fengan.git
+cd qerayet-el-fengan
 py -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -e ".[web]"
-.\.venv\Scripts\sahm-dashboard.exe
+.\.venv\Scripts\fengan-dashboard.exe
 ```
 
 **macOS / Linux**
 
 ```bash
-git clone https://github.com/omar06khaled/sahm.git
-cd sahm
+git clone https://github.com/omar06khaled/qerayet-el-fengan.git
+cd qerayet-el-fengan
 python3 -m venv .venv
 .venv/bin/pip install -e ".[web]"
-.venv/bin/sahm-dashboard
+.venv/bin/fengan-dashboard
 ```
 
-Open http://127.0.0.1:8000. It starts on demo data with order placement off. If port 8000 is taken, run `sahm-dashboard --port 8001`.
+Open http://127.0.0.1:8000. It starts on demo data with order placement off. If port 8000 is taken, run `fengan-dashboard --port 8001`.
 
 ## Connect your Younit account
 
 1. Install the official SDK from its source (it is not on PyPI yet): `pip install path/to/younit-python`.
 2. Copy `.env.example` to `.env` and fill in `TRADING_ID` and `API_KEY` from EFG Hermes ONE.
-3. Set `YOUNIT_MODE=live`, then start `sahm-dashboard` again.
+3. Set `YOUNIT_MODE=live`, then start `fengan-dashboard` again.
 
 Live mode uses Younit's **simulation (paper-trading) environment** unless you set `YOUNIT_REAL_MONEY=true`, and the dashboard always shows which one it is connected to.
 
@@ -114,10 +116,10 @@ Live mode uses Younit's **simulation (paper-trading) environment** unless you se
 
 ## Use it from an AI assistant
 
-`sahm-mcp` is an MCP server with 12 tools, including `list_strategies`, `backtest_strategy` and `check_strategy`.
+`fengan-mcp` is an MCP server with 12 tools, including `list_strategies`, `backtest_strategy` and `check_strategy`.
 
 ```bash
-claude mcp add sahm --transport stdio -- /absolute/path/to/sahm/.venv/bin/sahm-mcp
+claude mcp add fengan --transport stdio -- /absolute/path/to/qerayet-el-fengan/.venv/bin/fengan-mcp
 ```
 
 For full AI access to a Younit account (30 tools, funds, streaming), use the official SDK's `younit-mcp` alongside it; the command names never clash.
@@ -138,7 +140,7 @@ Browser (React)            AI assistant
 ```
 
 ```
-src/sahm/        Python package: API, MCP server, backtester, strategy library, brokers
+src/fengan/        Python package: API, MCP server, backtester, strategy library, brokers
 strategies/      your strategy files (an example is included)
 web/             React + TypeScript dashboard (prebuilt into web/dist)
 tests/           pytest suite, including the gate every strategy must pass
@@ -148,7 +150,7 @@ tests/           pytest suite, including the gate every strategy must pass
 
 New strategies are the best contribution. Add a file to `strategies/`, run `pytest -q`, and open a pull request with its report card from real EGX history. CI runs every strategy through the look-ahead guard and an import filter, and a person reads every pull request. See [STRATEGIES.md](STRATEGIES.md).
 
-To work on the dashboard: `cd web && npm install && npm run dev`, with `sahm-dashboard` running in another terminal.
+To work on the dashboard: `cd web && npm install && npm run dev`, with `fengan-dashboard` running in another terminal.
 
 ## License
 

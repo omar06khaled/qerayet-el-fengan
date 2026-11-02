@@ -12,7 +12,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1] / "strategies"
 FILES = sorted(p for p in ROOT.glob("*.py") if not p.name.startswith("_"))
 
-ALLOWED_MODULES = {"sahm.strategies", "math", "statistics", "typing", "dataclasses", "__future__"}
+ALLOWED_MODULES = {"fengan.strategies", "math", "statistics", "typing", "dataclasses", "__future__"}
 FORBIDDEN_NAMES = {"open", "eval", "exec", "compile", "__import__", "globals", "locals", "vars",
                    "getattr", "setattr", "delattr", "input", "breakpoint"}
 

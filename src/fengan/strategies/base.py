@@ -5,7 +5,7 @@ position for each day: 1 = hold the stock, 0 = hold cash. The backtester decides
 on day t's close and trades at day t+1's open, so a strategy may use day t's
 close but nothing after it. `checks.lookahead_check` verifies this automatically.
 
-    from sahm.strategies import Param, strategy
+    from fengan.strategies import Param, strategy
 
     @strategy(
         id="three_red_days",
@@ -70,7 +70,7 @@ class Strategy:
     signals: SignalFn
     params: list[Param] = field(default_factory=list)
     how: str = ""
-    author: str = "Sahm"
+    author: str = "Qerayet el Fengan"
     source: str = "built-in"
     reference: str = ""
     check: Optional[CheckFn] = None  # cross-parameter rule, returns an error message or None
@@ -116,7 +116,7 @@ def strategy(
     summary: str,
     params: Optional[list[Param]] = None,
     how: str = "",
-    author: str = "Sahm",
+    author: str = "Qerayet el Fengan",
     reference: str = "",
     check: Optional[CheckFn] = None,
     source: str = "built-in",

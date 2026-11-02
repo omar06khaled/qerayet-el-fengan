@@ -5,11 +5,11 @@ from datetime import date
 
 import pytest
 
-from sahm import strategies
-from sahm.broker.mock import MockYounitClient
-from sahm.strategies import Param, Strategy, indicators as ind
-from sahm.strategies.checks import chance_of_luck, lookahead_check, report_card
-from sahm.strategies.loader import load_file
+from fengan import strategies
+from fengan.broker.mock import MockYounitClient
+from fengan.strategies import Param, Strategy, indicators as ind
+from fengan.strategies.checks import chance_of_luck, lookahead_check, report_card
+from fengan.strategies.loader import load_file
 
 strategies.load_all()
 CLIENT = MockYounitClient()
@@ -91,7 +91,7 @@ def test_broken_user_file_is_reported_not_fatal(tmp_path):
 def test_duplicate_id_is_rejected(tmp_path):
     dup = tmp_path / "dup.py"
     dup.write_text(
-        "from sahm.strategies import strategy\n"
+        "from fengan.strategies import strategy\n"
         "@strategy(id='sma_cross', name='x', summary='x')\n"
         "def f(b, p):\n    return [0] * len(b)\n"
     )

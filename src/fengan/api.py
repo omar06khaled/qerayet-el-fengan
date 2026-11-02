@@ -1,7 +1,7 @@
-"""HTTP API for the Sahm dashboard. Shares the broker, order desk and backtester
+"""HTTP API for the Qerayet el Fengan dashboard. Shares the broker, order desk and backtester
 with the MCP server, so both front doors follow the same safety rules.
 
-Run:  sahm-dashboard        (serves the API and, if built, the web app on :8000)
+Run:  fengan-dashboard        (serves the API and, if built, the web app on :8000)
 """
 
 from __future__ import annotations
@@ -27,7 +27,7 @@ settings = Settings.from_env()
 client = make_client(settings)
 desk = OrderDesk(client, settings)
 
-app = FastAPI(title="Sahm API", version="0.1.0")
+app = FastAPI(title="Qerayet el Fengan API", version="0.1.0")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
@@ -192,18 +192,18 @@ def main() -> None:
 
     import uvicorn
 
-    parser = argparse.ArgumentParser(prog="sahm-dashboard", description="Run the Sahm dashboard.")
-    parser.add_argument("--port", type=int, default=int(os.getenv("SAHM_PORT", "8000")),
-                        help="Port to serve on (default 8000, or SAHM_PORT).")
+    parser = argparse.ArgumentParser(prog="fengan-dashboard", description="Run the Qerayet el Fengan dashboard.")
+    parser.add_argument("--port", type=int, default=int(os.getenv("FENGAN_PORT", "8000")),
+                        help="Port to serve on (default 8000, or FENGAN_PORT).")
     args = parser.parse_args()
     host = "127.0.0.1"
     if not _port_free(host, args.port):
         sys.exit(
             f"Port {args.port} is already in use, probably by another copy of the dashboard.\n"
-            f"Stop that one with Ctrl+C in its terminal, or run on another port: sahm-dashboard --port {args.port + 1}"
+            f"Stop that one with Ctrl+C in its terminal, or run on another port: fengan-dashboard --port {args.port + 1}"
         )
-    print(f"Sahm dashboard: http://{host}:{args.port}")
-    uvicorn.run("sahm.api:app", host=host, port=args.port)
+    print(f"Qerayet el Fengan dashboard: http://{host}:{args.port}")
+    uvicorn.run("fengan.api:app", host=host, port=args.port)
 
 
 if __name__ == "__main__":

@@ -2,11 +2,11 @@ from datetime import date
 
 import pytest
 
-from sahm.backtest import run_backtest
-from sahm.broker.mock import MockYounitClient
-from sahm.config import Settings
-from sahm.models import OrderRequest, OrderStatus, Side
-from sahm.orders import OrderDesk, OrderSafetyError
+from fengan.backtest import run_backtest
+from fengan.broker.mock import MockYounitClient
+from fengan.config import Settings
+from fengan.models import OrderRequest, OrderStatus, Side
+from fengan.orders import OrderDesk, OrderSafetyError
 
 
 @pytest.fixture

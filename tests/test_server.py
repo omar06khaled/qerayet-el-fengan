@@ -17,7 +17,7 @@ EXPECTED = {
 
 async def _run():
     env = {**os.environ, "YOUNIT_MODE": "mock", "YOUNIT_TRADING_ENABLED": "false"}
-    params = StdioServerParameters(command=sys.executable, args=["-m", "sahm.server"], env=env)
+    params = StdioServerParameters(command=sys.executable, args=["-m", "fengan.server"], env=env)
     async with stdio_client(params) as (r, w):
         async with ClientSession(r, w) as s:
             await s.initialize()

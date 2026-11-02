@@ -12,10 +12,10 @@ younit = pytest.importorskip("younit")
 from younit.models.market_data import HistoricalCandle, Quote as YQuote, StockInfo  # noqa: E402
 from younit.models.portfolio import PortfolioSummary, Position as YPosition  # noqa: E402
 
-from sahm.broker.younit import YounitClient  # noqa: E402
-from sahm.config import Settings  # noqa: E402
-from sahm.models import OrderRequest, OrderStatus, OrderType, Side  # noqa: E402
-from sahm.orders import OrderDesk, OrderSafetyError  # noqa: E402
+from fengan.broker.younit import YounitClient  # noqa: E402
+from fengan.config import Settings  # noqa: E402
+from fengan.models import OrderRequest, OrderStatus, OrderType, Side  # noqa: E402
+from fengan.orders import OrderDesk, OrderSafetyError  # noqa: E402
 
 
 class _FakeOrder:

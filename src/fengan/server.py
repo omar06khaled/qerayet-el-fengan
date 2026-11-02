@@ -1,8 +1,8 @@
-"""Sahm MCP server (FastMCP, stdio transport).
+"""Qerayet el Fengan MCP server (FastMCP, stdio transport).
 
-Run:  sahm-mcp              (after `pip install -e .`)
-  or: python -m sahm.server
-Inspect: npx @modelcontextprotocol/inspector sahm-mcp
+Run:  fengan-mcp              (after `pip install -e .`)
+  or: python -m fengan.server
+Inspect: npx @modelcontextprotocol/inspector fengan-mcp
 
 For full account access (funds, streaming, 30 tools), use the official SDK's
 `younit-mcp`. This server adds rule backtesting and runs on synthetic data offline.
@@ -28,7 +28,7 @@ client = make_client(settings)
 desk = OrderDesk(client, settings)
 
 mcp = FastMCP(
-    "sahm",
+    "fengan",
     instructions=(
         "Tools for Younit by EFG Hermes (Egyptian Exchange, prices in EGP). "
         f"Data source: {client.name}"

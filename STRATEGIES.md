@@ -1,6 +1,6 @@
 # Writing a strategy
 
-A strategy is one Python function that looks at daily prices and says, for each day, whether to hold the stock (1) or hold cash (0). Sahm handles the rest: backtesting, the dashboard form, the AI tools, and the checks.
+A strategy is one Python function that looks at daily prices and says, for each day, whether to hold the stock (1) or hold cash (0). Qerayet el Fengan handles the rest: backtesting, the dashboard form, the AI tools, and the checks.
 
 ## The built-in library
 
@@ -19,10 +19,10 @@ A strategy is one Python function that looks at daily prices and says, for each 
 
 1. Copy `strategies/three_red_days.py` to a new file in the same folder, for example `strategies/my_rule.py`.
 2. Change the `@strategy(...)` details and the rule inside the function.
-3. Restart `sahm-dashboard`. Your strategy appears under **Your strategies** in the lab, and in the MCP tools.
+3. Restart `fengan-dashboard`. Your strategy appears under **Your strategies** in the lab, and in the MCP tools.
 
 ```python
-from sahm.strategies import Param, closes, hold_while, indicators as ind, strategy
+from fengan.strategies import Param, closes, hold_while, indicators as ind, strategy
 
 
 @strategy(
@@ -79,4 +79,4 @@ The report also says how often a random rule would do as well. **A backtest cann
 2. Run `pytest -q`. Every strategy, yours included, must pass the look-ahead guard and the documentation checks.
 3. Open a pull request with the report card from live mode (real EGX history) pasted in the description.
 
-Strategy files are Python and run with full permissions. Contributed files may only import from `sahm.strategies`, `math`, `statistics`, `typing`, `dataclasses` and `__future__`, with no `open`, `eval`, `exec` or `__import__`. A test enforces this, but it is a first filter, not a sandbox: every pull request is also read by a person. Never load strategy files you haven't read.
+Strategy files are Python and run with full permissions. Contributed files may only import from `fengan.strategies`, `math`, `statistics`, `typing`, `dataclasses` and `__future__`, with no `open`, `eval`, `exec` or `__import__`. A test enforces this, but it is a first filter, not a sandbox: every pull request is also read by a person. Never load strategy files you haven't read.

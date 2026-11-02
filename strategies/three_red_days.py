@@ -1,12 +1,12 @@
 """Example user strategy. Copy this file, rename it, and change the rule.
 
-Every .py file in this folder is loaded when Sahm starts, and shows up in the
+Every .py file in this folder is loaded when Qerayet el Fengan starts, and shows up in the
 dashboard, the API and the MCP tools next to the built-in strategies.
 
 The rule: after a streak of down closes, buy, then sell after a fixed number of days.
 """
 
-from sahm.strategies import Param, strategy
+from fengan.strategies import Param, strategy
 
 
 @strategy(

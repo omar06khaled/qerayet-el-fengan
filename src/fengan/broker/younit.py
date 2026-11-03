@@ -12,6 +12,8 @@ Mapping notes, from reading the SDK source (v0.1.0):
 
 from __future__ import annotations
 
+import os
+
 from datetime import date, datetime, timedelta, timezone
 
 from ..config import Settings
@@ -43,6 +45,28 @@ def _status(text: object) -> OrderStatus:
     return _STATUS.get(str(text or "").strip().lower(), OrderStatus.PENDING)
 
 
+PAPER_UNAVAILABLE = (
+    "Younit's paper-trading environment is temporarily disabled in this SDK version, "
+    "so Fengan is connected read-only: charts, quotes and holdings work, orders are blocked. "
+    "Orders on your real account need YOUNIT_REAL_MONEY=true."
+)
+
+
+def _connect(Client, settings: Settings) -> tuple[object, bool]:
+    """Return (sdk_client, paper_unavailable)."""
+    if settings.real_money:
+        return Client(), False
+    try:
+        return Client(simulation=True), False
+    except Exception as e:
+        msg = str(e)
+        if "EFG_SIMULATION" not in msg and "temporarily disabled" not in msg:
+            raise
+        if os.getenv("EFG_SIMULATION", "").strip().lower() not in {"", "0", "false", "no", "off"}:
+            raise RuntimeError("Remove EFG_SIMULATION from your environment or .env; younit 0.1.1 refuses to start with it set.") from e
+        return Client(), True
+
+
 class YounitClient(BrokerClient):
     name = "younit"
 
@@ -56,8 +80,14 @@ class YounitClient(BrokerClient):
                     "pip install <path-to>/younit-python-master"
                 ) from e
             # Credentials come from TRADING_ID / API_KEY (env or .env), read by the SDK itself.
-            sdk_client = Client(simulation=not settings.real_money)
+            sdk_client, paper_unavailable = _connect(Client, settings)
+        else:
+            paper_unavailable = False
         self._c = sdk_client
+        # True when the user asked for paper trading but the SDK can't provide it
+        # (younit 0.1.1 disables simulation). We then connect to the real account
+        # for reads only and refuse every write, so nothing ever hits real money by accident.
+        self.read_only = paper_unavailable
         self._settings = settings
         self._placed: dict[str, Order] = {}
 
@@ -139,7 +169,12 @@ class YounitClient(BrokerClient):
 
     # writes
 
+    def _check_writable(self) -> None:
+        if self.read_only:
+            raise ValueError(PAPER_UNAVAILABLE)
+
     def submit_order(self, request: OrderRequest) -> Order:
+        self._check_writable()
         if request.order_type == OrderType.STOP:
             raise ValueError("The Younit API supports market and limit orders only. Use a limit order.")
         limit = request.limit_price if request.order_type == OrderType.LIMIT else None
@@ -168,6 +203,7 @@ class YounitClient(BrokerClient):
         return sorted(self._placed.values(), key=lambda o: o.created_at, reverse=True)
 
     def cancel_order(self, order_id: str) -> Order:
+        self._check_writable()
         if not order_id.isdigit():
             raise ValueError(f"'{order_id}' is not a Younit order id.")
         if not self._c.cancel_order(int(order_id)):

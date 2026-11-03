@@ -107,6 +107,8 @@ Open http://127.0.0.1:8000. It starts on demo data with order placement off. If 
 
 Live mode uses Younit's **simulation (paper-trading) environment** unless you set `YOUNIT_REAL_MONEY=true`, and the dashboard always shows which one it is connected to.
 
+> **younit 0.1.1:** EFG has temporarily disabled the simulation environment while they verify it. Fengan does not bypass that check. Instead it connects **read-only**: charts, quotes, holdings and backtests work, and every order and cancel is refused. Don't set `EFG_SIMULATION`; the SDK won't start with it.
+
 ## Safety
 
 - **Order placement is off** until `YOUNIT_TRADING_ENABLED=true`.

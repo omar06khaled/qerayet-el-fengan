@@ -58,7 +58,8 @@ def status():
         "source": client.name,
         "synthetic": client.name == "mock",
         "real_money": client.name != "mock" and settings.real_money,
-        "trading_enabled": settings.trading_enabled,
+        "trading_enabled": settings.trading_enabled and not getattr(client, "read_only", False),
+        "read_only": getattr(client, "read_only", False),
         "max_order_egp": settings.max_order_egp,
     }
 

@@ -34,6 +34,9 @@ class OrderDesk:
         self._pending: dict[str, PendingPreview] = {}
 
     def preview(self, request: OrderRequest) -> dict:
+        if getattr(self._client, "read_only", False):
+            from .broker.younit import PAPER_UNAVAILABLE
+            raise OrderSafetyError(PAPER_UNAVAILABLE)
         if request.order_type == OrderType.LIMIT and request.limit_price is None:
             raise OrderSafetyError("Limit orders need a limit_price.")
         if request.order_type == OrderType.STOP and request.stop_price is None:
